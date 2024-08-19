@@ -11,35 +11,45 @@
 ## Data mounts must be declared here to mount data paths to the Docker containers:
 
 data_mounts:
-  # This will mount /datacentre/archive on the host as /data in the containers
-  - host_path: /datacentre/archive
-    mount_path: /data
+# This will mount /datacentre/archive on the host as /data in the containers
+#  - host_path: /datacentre/archive
+#    mount_path: /data
+  - host_path: /glade/campaign/collections/cdg/data/CMIP6
+    mount_path: /esg/data/CMIP6
+  - host_path: /glade/campaign/collections/cdg/data/cmip5
+    mount_path: /esg/data/cmip5
 
 ## Datasets are used by the THREDDS container to construct the initial catalog
 ## and by the Nginx file server:
 
 data_datasets:
-  # This will expose files at /data/cmip6/[path] in the container
-  # as http://esgf-data.example.org/thredds/{dodsC,fileServer}/esg_cmip6/[path]
+# This will expose files at /data/cmip6/[path] in the container
+# as http://esgf-data.example.org/thredds/{dodsC,fileServer}/esg_cmip6/[path]
+#  - name: CMIP6
+#    path: esg_cmip6
+#    location: /data/cmip6
+# Similarly, this exposes files at /data/cordex/[path] in the container
+# as http://esgf-data.example.org/thredds/{dodsC,fileServer}/esg_cordex/[path]
+#  - name: CORDEX
+#    path: esg_cordex
+#    location: /data/cordex
   - name: CMIP6
     path: esg_cmip6
-    location: /data/cmip6
-  # Similarly, this exposes files at /data/cordex/[path] in the container
-  # as http://esgf-data.example.org/thredds/{dodsC,fileServer}/esg_cordex/[path]
-  - name: CORDEX
-    path: esg_cordex
-    location: /data/cordex
+    location: /esg/data/CMIP6
+  - name: CMIP5
+    path: esg_cmip5
+    location: /esg/data/cmip5
 
 # An S3 location for a dataset can be specified using `s3Location` instead of `location` in the yaml config.
 # We don't currently support adding security parameters for accessing secured S3 buckets.
-data_datasets:
-  - name: CMIP6
-    path: esg_cmip6
-    s3Location:
-      host: example.com
-      port: 443
-      bucket: bucket_name
-      dataPath: path/to/files
+#data_datasets:
+#  - name: CMIP6
+#    path: esg_cmip6
+#    s3Location:
+#      host: example.com
+#      port: 443
+#      bucket: bucket_name
+#      dataPath: path/to/files
 
 # https://github.com/ESGF/esgf-docker/blob/master/docs/deploy-ansible.md#configuring-the-available-datasets
 
@@ -48,6 +58,7 @@ data_datasets:
 ## OPTIONAL: It's possible to use an existing catalog with the THREDDS server:
 
 #thredds_catalog_host_path: /path/to/existing/catalogs
+thredds_catalog_host_path: /glade/campaign/collections/cdg/cache/esgf-data-node-old/esg/content/thredds/esgcet
 
 ## You must still configure data_mounts and data_datasets as above, except in this
 ## case the datasets should correspond the to the datasetRoots in your THREDDS catalogs.

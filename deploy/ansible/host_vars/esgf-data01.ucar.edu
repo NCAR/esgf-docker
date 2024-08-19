@@ -1,0 +1,92 @@
+### EDIT THIS
+
+### Example of a host_vars file specific to the host "esgf.data.example.org".
+
+### Provides variables for only this host machine.
+
+### See: https://github.com/ESGF/esgf-docker/blob/master/docs/deploy-ansible.md
+
+### for more information about configuring an Ansible installation.
+
+
+
+## OPTIONAL: Enabling and disabling components:
+
+#thredds_enabled: true/false
+thredds_enabled: true
+
+#fileserver_enabled: true/false
+fileserver_enabled: false
+
+### See: https://github.com/ESGF/esgf-docker/blob/master/docs/deploy-ansible.md#enabling-and-disabling-components
+
+
+
+## OPTIONAL: Enabling SSL for the server
+
+#nginx_config_template: ssl.proxy.conf.j2
+nginx_config_template: ssl.proxy.conf.j2
+
+#ssl_certificate: |
+#  -----BEGIN CERTIFICATE-----
+#  ...
+
+#ssl_private_key: |
+#  -----BEGIN RSA PRIVATE KEY-----
+#  ...
+
+### See: https://github.com/ESGF/esgf-docker/blob/master/docs/deploy-ansible.md#enabling-ssl
+
+
+## OPTIONAL: Enabling access control components
+
+#auth_enabled: true/false
+auth_enabled: false
+
+## Configuration for the auth service container
+#auth_settings:
+#  MIDDLEWARE:
+#    - authenticate.oauth2.middleware.BearerTokenAuthenticationMiddleware
+#    - authenticate.oidc.middleware.OpenIDConnectAuthenticationMiddleware
+#    - authorize.opa.middleware.OPAAuthorizationMiddleware
+#  OPA_SERVER:
+#    package_path: esgf
+#    rule_name: allow
+#  # Group info keys for authorization
+#  OAUTH2_GROUPS_KEY: group_membership
+#  OIDC_GROUPS_KEY: group_membership
+#  # OAuth Bearer Token auth settings
+#  OAUTH_CLIENT_ID:
+#  OAUTH_CLIENT_SECRET:
+#  OAUTH_TOKEN_URL:
+#  OAUTH_TOKEN_INTROSPECT_URL:
+#  # OIDC auth settings
+#  OIDC_BACKEND_CLIENT_NAME: esgf
+#  AUTHLIB_OAUTH_CLIENTS:
+#    esgf:
+#      client_id:
+#      client_secret:
+#      authorize_url:
+#      userinfo_endpoint:
+#      client_kwargs:
+#        scope: openid profile email
+
+## Default rego template (override this to use your own).
+#opa_policy_template: policy.rego.j2
+
+## Paths to apply the authorisation policy to and the access group that a user will need.
+#opa_policy_restricted_paths:
+#  - name: threddsdata
+#    path: /thredds/fileServer/restricted/.*
+#    group: admins
+#  - name: example
+#    path: /some/restricted/path/.*
+#    group: admins
+
+## Your server's name. The default policy will deny requests from other hostnames.
+#opa_policy_server_host: example.com
+
+## The logging level of the OPA container. Set this to debug for troubleshooting.
+#opa_log_level: info
+
+### See: https://github.com/ESGF/esgf-docker/blob/master/docs/deploy-ansible.md#enabling-access-control
